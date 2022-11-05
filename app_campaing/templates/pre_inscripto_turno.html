@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block encabezado %} Preinscripción {% endblock %}
+
+{% block nav %} 
+    {% include 'nav_public.html' %}
+{% endblock %}
+
+{% block content %} 
+ 	    <br>
+        <div class="row">
+            <div class="col s12 center-align z-depth-4 ligthen-2 black-text">
+                <h5> ¡Preinscripción EXITOSA!</h5>
+            </div>
+        </div>
+
+        <div class="row borde-negro">
+            <div class="col s12 l6 center-align">
+                <h4>Datos de mascota:</h4> 
+                    <h6><strong>Nombre: </strong>{{paciente.nombre_mascota}}</h6>
+                    <h6><strong>Especie: </strong>{{paciente.especie}}</h6>
+                    <h6><strong>Sexo: </strong>{{paciente.sexo}}</h6>      
+                          
+            </div>
+
+            <div class="col s12 l6 center-align">
+                <h4>Nº de Preinscripto:</h4> 
+                <h2>{{paciente.id}}</h2>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--<div class="col s12  l4"></div> -->
+             <div class="col s12 center-align">
+                <h4>¡TENER EN CUENTA!</h4>
+                <h6>
+                    * El animal debe ir en <strong>AYUNO</strong> de 12 hs.<br>
+                    (Si le dieron de comer <br>
+                    o tomar agua deben avisar,<br>
+                    así de esta manera comunicamos<br>
+                    de esa situación a los veterinarios).<br>
+                    
+                    * Llevar una <strong>manta</strong> para cubrirlo.<br>
+                    
+                    * La mascota puede ser atendida a partir de los <strong>6 (seis)</strong> meses de edad.
+                </h6>
+            </div> 
+         <!-- <div class="col s12  l4"></div> -->           
+        </div>
+
+        <div class="divider"></div>
+        <div class="separador"></div>
+        <div class="row">
+            <div class="col s12 m12 center-align">
+              <a class="waves-effect waves-light btn-large" href="/"><i class="material-icons left">reply</i><strong>REGRESAR</strong></a>
+            </div>
+            
+        </div>
+
+
+{% endblock %}
+
+{% block extra_js %} 
+
+{% endblock %}

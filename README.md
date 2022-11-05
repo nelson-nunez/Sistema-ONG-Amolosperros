@@ -1,2 +1,1 @@
-# Sistema-ONG-Amolosperros
-Sistema ONG Amo los Perros
+# Amo a los Perros

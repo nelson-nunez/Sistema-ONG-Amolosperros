@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+			
+{% block encabezado %}Colaboradores{% endblock %}
+			
+{% block content %} 
+	<h6 class="center-align"><strong>Campaña {{ campania.fecha }}</strong></h6> 
+
+{% if colaboradores %}
+ <ul class="collection z-depth-2">
+ {% for colaborador in colaboradores %}
+   <li class="collection-item avatar grey lighten-5">
+    {% if colaborador.padrino %}
+      {% if colaborador.ayudante %}
+      	<i class="material-icons circle red-text text-darken-2 grey lighten-2 z-depth-1">favorite</i>
+        <p>
+        {{ colaborador.colaborador.apellido}} {{ colaborador.colaborador.nombre}}<br>(colaborador y padrino)
+        {% if user.is_authenticated %}<br><span><i class="material-icons tiny">phone</i><strong>({{colaborador.colaborador.telefono}})</strong></span>
+        {%endif%}
+        </p>
+      {% else %}
+      <i class="material-icons circle green-text text-darken-2 grey lighten-2 z-depth-1">local_parking</i>
+      <p>
+      {{ colaborador.colaborador.apellido}} {{ colaborador.colaborador.nombre}}<br>(padrino)
+      {% if user.is_authenticated %}<br><span><i class="material-icons tiny">phone</i><strong>({{colaborador.colaborador.telefono}})</strong></span>
+      {%endif%}
+      </p>
+      {%endif%}
+    {% else %}
+      <i class="material-icons circle amber-text text-darken-2 grey lighten-2 z-depth-1">pan_tool</i>
+      <p>
+      {{ colaborador.colaborador.apellido}} {{ colaborador.colaborador.nombre}}<br>(colaborador)
+      {% if user.is_authenticated %}<br><span><i class="material-icons tiny">phone</i><strong>({{colaborador.colaborador.telefono}})</strong></span>
+      {%endif%}
+      </p>
+    {%endif%}
+
+
+
+    </li>
+
+{% endfor %}
+</ul>
+{% else %}
+
+<div class="card-panel grey darken-4 center-align">
+  <span class="white-text">
+    <strong>NO HAY COLABORADORES</strong>    
+  </span> 
+</div>
+
+
+{%endif%}
+
+<br>
+<div class="row center-align">
+<a href="/campaing/ver_campanas/" class="waves-effect waves-light btn-large">
+	<i class="material-icons left">reply</i><strong>Regresar</strong></a>
+</div>
+
+{% endblock %}
+
+

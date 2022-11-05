@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block encabezado %} Inscripción {% endblock %}
+
+{% block content %} 
+  <!-- inicio contenedor principal -->
+  <div class="container">
+    <!-- inicio row  -->
+    <div class="row">
+      <!-- inicio columna para datos de campaña -->
+      <div class="col s12">
+       <div class="card-panel grey grey darken-4 center-align">
+          <span class="white-text"><strong>AGREGUE LOS DATOS PARA CREAR UNA INSCRIPCIÓN</strong> <!-- ES PARA QUE VAYA UN RENGLON ABAJO, strong= para que sea en negrita -->
+          </span>
+        </div>       
+      </div>
+      <!-- fin datos campaña -->      
+    </div>
+          <!-- fin row  -->
+
+    <!-- INICIO FORMULARIO  -->
+    <div class="row">
+    <form class="col s12" method="POST">
+      {% csrf_token %}
+      <h5>DATOS PROPIETARIO</h5>      
+      {{ formPropietario.as_p }}
+	  <h5>DATOS MASCOTA</h5>      
+      {{ formAnimalito.as_p }}
+  
+      <div class="row"> <!-- row para los botones de abajo -->
+
+        <div class="col s12  center-align">
+
+          <button action="/campaing/home_admin/" type="submit" class="waves-effect waves-light accent-2 btn-large "><i class="material-icons left">assignment</i></i>Confirmar
+          </button>
+        </div>
+
+      </div>              
+    </form>
+  </div>
+             <!-- FIN FORMULARIO  -->
+  </div>
+  <!-- fin contenedor principal -->
+
+{% endblock %}
+
+{% block extra_js %}
+  <!-- Para que funcione el select  -->
+  <script>
+  $(document).ready(function() {
+      $('select').material_select();
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block encabezado %} Crear Barrio {% endblock %}
+
+{% block content %} 
+	
+	<div class="row">
+      <div class="col s12 m6">
+      <!--<div class="fixed-action"> -->
+       
+          <form method="POST">
+            {% csrf_token %}
+              {{ form.as_p }}
+
+              <button type="submit" class="waves-effect waves-light accent-2 btn-large "><i class="material-icons left">dashboard</i></i>      <strong>Crear Barrio</strong>
+            </button>
+          </form>
+
+            
+       
+      </div>
+      <!--</div>  -->
+    
+  <div class="separador"></div>
+
+
+  <div class="col s12 m6">
+    <p><h5 class="center-left">Listado de Barrios: </h5></p> 
+    <ul class="collection">
+  {% for barrio in barrios %}
+          
+      <li class="collection-item avatar">
+        <i class="material-icons circle">room</i>
+        <span class="title">{{barrio.nombre}}</span>
+        <p>{{barrio.detalle}}
+        </p>
+        <!-- <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a> -->
+      </li>
+    
+
+{% endfor %}
+  </ul>
+</div>
+
+  </div>              
+
+{% endblock %}
+
+{% block extra_js %} 
+
+
+{% endblock %}

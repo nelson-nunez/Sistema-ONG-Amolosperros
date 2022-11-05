@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h4>Resultado: N° {{ query }}</h4>
+
+{% for paciente in pacientes %}
+
+	<div class="row z-depth-2">
+
+		<div class="col s12 separador"></div>
+		<!--<div class="col s12 z-depth-2">  -->
+			<div class="col s6 ">
+				<p><h6>Nombre: <strong>{{ paciente.nombre_mascota }}</strong></h6>
+				</p>
+			<!-- </div>  -->
+			<!-- <div class="col s6">  -->
+				<p><h6>Especie: <strong>{{ paciente.especie }}</strong>
+				</h6></p>
+			</div>
+		
+ 
+
+			<div class="col s6">
+		  		<a class="btn-floating waves-effect waves-light btn-large right" href="/campaing/formulario_inscripcion_preinscriptos/{{paciente.id}}/"><i class="material-icons">create</i></a>
+
+		  	</div>
+		  	
+	  	<!--</div>  -->
+
+  	</div>
+
+{% endfor %}
+	 <div class="row">
+	
+		<div class="col s12 m6 center-align">
+
+			<a href="/campaing/inscribir_paciente_pre/" class="waves-effect waves-light btn-large btn-ancho"><i class="material-icons left">search</i>Buscar otro</a>
+
+		</div>
+
+		<div class="col s12 separador hide-on-med-and-up"></div>
+
+		<div class="col s12 m6 center-align btn-ancho">
+
+			<a href="/campaing/formulario_inscripcion/" class="waves-effect waves-light btn-large btn-ancho"><i class="material-icons left">event_busy</i>No preinscripto</a>
+
+		</div>
+	
+
+	</div>
+
+{% endblock %}

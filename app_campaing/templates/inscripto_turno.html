@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block encabezado %} Turno {% endblock %}
+
+{% block content %} 
+	
+	
+        <!--<div class="row">  -->
+            <div class="col s12 center-align ligthen-2 black-text z-depth-4">
+                <h5><strong>¡ INSCRIPCIÓN EXITOSA !</strong></h5>
+            </div>
+        <!--</div>  -->
+
+        <div class="row borde-negro z-depth-4">
+            <div class="col s12 l6 center-align">
+                <h4>Datos de mascota:</h4> 
+                <h6><strong>Nombre: </strong>{{paciente.nombre_mascota}}</h6>
+                <h6><strong>Especie: </strong>{{paciente.especie}}</h6>
+                <h6><strong>Sexo: </strong>{{paciente.sexo}}</h6>      
+                          
+            </div>
+
+            <div class="col s12 l6 center-align">
+                <h4>Nº de Turno:</h4> 
+                <h2>{{paciente.turno}}</h2>
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col s12 center-align">
+                <h4>¡TENER EN CUENTA!</h4>
+                <h5>
+                    El número de turno será usado<br>
+                    para dar de alta al paciente.<br>          
+                </h5>
+            </div>
+
+            
+        </div>
+
+        <div class="divider"></div>
+        <div class="separador"></div>
+        <div class="row">
+                <div class="col s12 m12 center-align">
+                  <a class="waves-effect waves-light btn-large" href="/campaing/home_admin/"><i class="material-icons left">reply</i> <strong>Regresar</strong></a>
+                </div>
+                
+            
+        </div>
+
+
+{% endblock %}
+
+{% block extra_js %} 
+
+{% endblock %}

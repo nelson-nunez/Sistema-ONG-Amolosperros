@@ -1,0 +1,307 @@
+{% extends "base.html" %}
+
+{% block encabezado %} Home {% endblock %}
+
+{% block content %} 
+	{% if campanias %}  
+
+
+    <!-- inicio row para datos de campaña -->
+    <div class="row">
+      <!-- inicio columna datos de campaña -->
+      <div class="col s12">
+        <div class="card-panel grey darken-4 center-align">
+          <span class="white-text">
+            <strong>CAMPAÑA ACTUAL</strong>
+            <br>
+            <strong>
+              
+              {% ifequal campaing.tipo "castracion" %}
+                CASTRACIÓN
+              {% else %}
+                VACUNACIÓN
+              {% endifequal %}
+               EN {{ campaing.lugar.nombre.upper  }}</strong>
+          </span>
+        </div>
+      </div>
+      <!-- fin columna para datos de campaña  --> 
+            <div class="col s12 m1 l2"></div> 
+            <div class="col s12 m10 l8 center-align">
+              <a href="/campaing/ver_colaboradores/{{ campaing.id }}" class=" btn-ancho btn white-text">
+              <i class="material-icons tiny">tag_faces</i> Ver Colaboradores ({{ c_colaboradores_en_campana }}) 
+              </a>
+            </div>
+            <div class="col s12 m1 l2"></div> 
+    </div>
+    <!-- fin row para para datos de campaña  -->
+
+
+<!--   <h1>{{usuario}}</h1>
+ -->
+
+    <div class="row">
+
+
+      <div class="col s12">
+        <div class="row  lighten-3">
+          <div class="col s12 m2 l3"></div>
+          <div class="col s12 m8 l6">
+            <div class="col s12 borde-negro center-align grey darken-4 white-text">
+              <p><h6>PREINSCRIPTOS: {{ c_preinscriptos }}</h6></p> <!--REEMPLAZAR POR PREINSCRIPTOS -->
+              <!-- <p><h2><strong>{{ c_inscriptos }}</strong></h2></p> -->
+            </div>
+            <div class="col s12 borde-negro center-align grey lighten-5 z-depth-2">
+              <p><h5><strong>INSCRIPTOS: {{ c_inscriptos }}</strong></h5></p>
+              <!-- <p><h2><strong>{{ c_inscriptos }}</strong></h2></p> -->
+            </div>
+            <div class="col s6 borde-negro grey lighten-5 z-depth-2">
+              <img src="../../../static/images/dog.png" alt="" class="left avatar-home"><p><h5 class="center-align"><strong>{{perros}}</strong></h5></p>
+            </div>
+            <div class="col s6 borde-negro grey lighten-5 z-depth-2">
+              <img src="../../../static/images/cat.png" alt="" class="left avatar-home"><p><h5 class="center-align"><strong>{{gatos}}</strong></h5></p>
+            </div>
+          </div>
+          <div class="col s12 m2 l3"></div>
+        </div>
+      </div>
+
+
+
+  
+
+      <div class="row">
+        <div class="col s12">
+
+          <div class="col s4 borde-negro center-align grey lighten-5 z-depth-2">
+            <span class="icono-home">
+              <i class="material-icons medium">account_box</i>
+            </span>
+            <span>
+              <h6><strong>$ {{ pagados }}</strong></h6>
+              <h6>Pagados por dueño</h6>
+            </span>
+          </div>
+
+          <div class="col s4 borde-negro center-align grey lighten-5 z-depth-2">
+            <span class="icono-home">
+              <i class="material-icons medium">favorite</i> 
+            </span>
+            <span>
+              <h6><strong>$ {{ campaing.monto_inter_grupo_gastado }}</strong></h6>
+              <h6>Pagados por grupo</h6>
+            </span>
+          </div>
+
+          <div class="col s4 borde-negro center-align grey lighten-5 z-depth-2">
+            <span class="icono-home">
+              <i class="material-icons medium">local_atm</i>
+            </span>
+
+            <!-- if para el color del saldo positivo o negativo -->
+            
+            {% if saldo > 0 %}
+
+            <span>
+              <h6><strong>$ {{ saldo }}</strong></h6>
+              <h6>Saldo del grupo</h6>
+            </span>
+
+            {% else %}
+
+            <span>
+              <h6 class="red-text text-darken-2"><strong>$ {{ saldo }}</strong></h6>
+              <h6>Saldo del grupo</h6>
+            </span>
+
+            {% endif %}
+
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+    </div>
+
+  <div class="col s12 l3 m2"></div>
+
+
+  <div class="row z-depth-4">
+    <div class="col s12 center-align borde-negro">
+      <!--<p class="z-depth-4">z-depth-4</p>  -->
+      <h5><strong>Atendidos</strong></h5>
+      <h2>{{atendidos}}</h2>
+    </div>
+  </div>
+<!-- inicio botones inscribir y dar alta -->  
+  <div class="row">
+    <div class="col s12 m6 center-align"> 
+
+      <a class="waves-effect waves-light btn-large btn-ancho" href="/campaing/inscribir_paciente_pre/"><i class="material-icons left">assignment</i>Inscribir Paciente</a>
+
+    </div>
+    <div class="col s12 separador hide-on-med-and-up"></div>
+    <div class="col s12 m6 center-align"> 
+      <a class="waves-effect waves-light btn-large btn-ancho" href="../buscar_paciente/"><i class="material-icons left">assignment_turned_in</i>Dar de Alta</a>
+    </div>
+
+  </div>
+<!-- fin botones inscribir y dar alta -->
+
+
+<div class="row">
+
+  <div class="col s12">
+
+    <ul class="collapsible" data-collapsible="accordion">
+
+      <li>
+        <div class="collapsible-header grey lighten-4">
+          <i class="material-icons">tune
+          </i>
+          Ajustes de la campaña
+          <span class="secondary-content">
+            <i class="material-icons">expand_more</i>
+          </span>
+        </div>
+
+        
+        <div class="collapsible-body grey lighthen-5 opciones_home">
+        
+          <ul class="collection">
+          {% if preinscripcion %}
+
+                {% if request.user.is_staff %}
+                  <li class="collection-item">
+                    <a href="/campaing/close_inscription_campaing/{{campaing.id}}" class="btn-floating btn-medium waves-effect waves-light left">
+                      <i class="material-icons">lock</i>
+                    </a>
+                
+                    <span>
+                      <strong>Cerrar Preinscripción</strong><br>
+                      No se recibirán más inscripciones públicas
+                    </span>
+                  </li>
+                {% endif %}
+
+                  <li class="collection-item">
+                    <a href="../ver_qr/" class="btn-floating btn-medium waves-effect waves-light left">
+                      <i class="material-icons">link</i>
+                    </a>
+                
+                    <span>
+                      <strong>Enlace público</strong><br>
+                      Ver, imprimir o compartir el enlace público de inscripciones.
+                    </span>
+                  </li>
+            {% endif %}
+                {% if request.user.is_staff %}
+                <li class="collection-item">
+                  <a href="/campaing/end_campaing/{{campaing.id}}" class="btn-floating btn-medium waves-effect waves-light left">
+                    <i class="material-icons">power_settings_new</i>
+                  </a>
+              
+                  <span>
+                    <strong>Finalizar Campaña</strong><br>
+                    Finalizará la campaña activa y se generarán las estadísticas
+                  </span>
+                </li>
+                {% endif %}
+          
+              </ul>
+            
+          </div>
+        </li>
+        
+      
+
+    </ul>
+
+  </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+
+
+	{% else %}
+
+     {% if request.user.is_staff %}
+        <div class="row">
+
+          <div class="col s12 separador"></div>
+
+
+          <div class="col s12">
+            <div class="card-panel grey darken-4 center-align z-depth-4">
+              <span class="white-text">
+                <h5>No hay campañas, para crear una haga click en 
+                <strong>"crear campaña"</h5></strong>
+              </span>
+            </div>
+          </div>
+
+          <!--<div class="col s12 center-align grey z-depth-4">
+            <h5>No hay campañas, para crear una haga click en 
+              <strong>"crear campaña"</strong>.</h5>
+          </div>  -->
+
+          <div class="col s12 separador"></div>
+
+          <div class="col s12 center-align ">
+            <a class="waves-effect waves-light btn-large" href="/campaing/create_campaing/"><i class="material-icons left">loyalty</i>Crear Campaña</a>
+          </div>
+        </div>
+      {% else %}
+                  <div class="row">
+
+          <div class="col s12 separador"></div>
+
+
+          <div class="col s12">
+            <div class="card-panel grey center-align z-depth-4">
+              <span class="white-text">
+                <h5>No hay campañas activas, para ver campañas anteriores haga click en 
+                <strong>"Ver Campañas"</h5></strong>
+              </span>
+            </div>
+          </div>
+
+          <!--<div class="col s12 center-align grey z-depth-4">
+            <h5>No hay campañas, para crear una haga click en 
+              <strong>"crear campaña"</strong>.</h5>
+          </div>  -->
+
+          <div class="col s12 separador"></div>
+
+          <div class="col s12 center-align ">
+            <a class="waves-effect waves-light btn-large" href="/campaing/ver_campanas/"><i class="material-icons left">loyalty</i>Ver Campañas</a>
+          </div>
+        </div>
+	   {% endif %}
+
+	{% endif %}
+{% endblock %}

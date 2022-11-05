@@ -1,0 +1,337 @@
+{% extends "base.html" %}
+
+  
+
+{% block encabezado %}Campaña {{ campana.fecha }}{% endblock %}
+			
+			
+{% block content %} 
+	<br>
+			<a href="/campaing/ver_colaboradores/{{ campaing.id }}" class="black-text">
+		<div class="col s12 center-align">
+				<span>
+		    		<i class="material-icons tiny">pan_tool</i>
+					Agradecemos a los voluntarios que colaboraron en esta campaña. Conocelos aquí.
+				</span>
+		</div>
+		   	</a>
+	<div class="row grey lighten-4 z-depth-2">
+		<div class="col s12 blue-grey white-text center-align">
+		<h6>Campaña de <strong>{{ campana.tipo.upper }}</strong> en {{ campana.lugar }}. Realizada el: {{ campana.fecha }}</h6> 
+		</div>
+	    <div class="row">
+<!-- 	    	<div class="col s1"></div>
+ -->			<div class="col s4 center-align">
+	    	<div class="separador"></div>
+		    	<span class="">
+		    		<i class="material-icons">assignment</i><br>
+		    		{{ c_inscriptos }} Inscriptos
+		    	</span>
+		    </div>
+<!-- 		    <div class="col s2"></div>
+ -->		<div class="col s4 center-align">
+		    	<div class="separador"></div>
+		    	<span class=" ">
+		    		<i class="material-icons">assignment_turned_in</i><br>
+		    		{{ atendidos }} Atendidos
+		    	</span>
+		    </div>
+<!-- 		    <div class="col s1"></div>
+ -->		<div class="col s4 center-align">
+		    	<div class="separador"></div>
+		    	<span>
+		    		<i class="material-icons">pan_tool</i><br>
+		    		{{ c_colaboradores_en_campana }} Voluntarios
+		    	</span>
+		    </div>			
+ 		</div>
+	</div>
+<!--     <div class="row grey lighten-3">
+		<div class="col s6 borde-rojo">
+	    	<p><img src="../../../static/images/dog.png" alt="" class="circle">Perros: {{ perros }}</p>
+	    </div>
+		<div class="col s6 borde-rojo">
+	    	<p>	<img src="../../../static/images/cat.png" alt="" class="circle">Gatos: {{ gatos }}</p>
+	   		<p></p>
+	    </div>
+	</div> -->
+
+	{% if user.is_authenticated %}
+
+      <div class="row">
+        <div class="col s12">
+
+          <div class="col s4 borde-negro center-align grey lighten-5 z-depth-2">
+            <span class="icono-home">
+              <i class="material-icons medium">account_box</i>
+            </span>
+            <span>
+              <h6><strong>$ {{ pagados }}</strong></h6>
+              <h6>Pagados por dueño</h6>
+            </span>
+          </div>
+
+          <div class="col s4 borde-negro center-align grey lighten-5 z-depth-2">
+            <span class="icono-home">
+              <i class="material-icons medium">favorite</i> 
+            </span>
+            <span>
+              <h6><strong>$ {{ campana.monto_inter_grupo_gastado }}</strong></h6>
+              <h6>Pagados por grupo</h6>
+            </span>
+          </div>
+
+          <div class="col s4 borde-negro center-align grey lighten-5 z-depth-2">
+            <span class="icono-home">
+              <i class="material-icons medium">local_atm</i>
+            </span>
+
+            <!-- if para el color del saldo positivo o negativo -->
+            
+            {% if saldo > 0 %}
+
+            <span>
+              <h6><strong>$ {{ saldo }}</strong></h6>
+              <h6>Saldo del grupo</h6>
+            </span>
+
+            {% else %}
+
+            <span>
+              <h6 class="red-text text-darken-2"><strong>$ {{ saldo }}</strong></h6>
+              <h6>Saldo del grupo</h6>
+            </span>
+
+            {% endif %}
+
+
+          </div>
+        </div>
+      </div>
+
+    {% endif %}
+
+    <div class="row grey lighten-4 z-depth-2">
+		<div class="col s12 right-align blue-grey white-text">
+			<h6>
+				<strong>
+				Distribución según especie
+				</strong>
+			</h6>
+		</div>
+
+      	<div class="col s12">
+      		<div class="col s2">
+      			<p>
+      				<img src="../../../static/images/dog.png" alt="" class="responsive-img">
+      			</p>	
+      		</div>
+      		<div class="col s10">
+      			<p>
+      				Perros: {{ perros }} ({{porcentaje_perros|floatformat:"1"}}%)
+      			</p>
+      			<div class="progress">
+      				<div class="determinate" {{"style="}} {{'"width:'}}{{porcentaje_perros|floatformat:"0"}}{{'%"'}}></div>
+  				</div>
+      		</div>
+      	</div>
+
+      	<div class="col s12">
+      		<div class="col s2">
+      			<p>
+      				<img src="../../../static/images/cat.png" alt="" class="responsive-img">
+      			</p>	
+      		</div>
+      		<div class="col s10">
+      			<p>
+      				Gatos: {{ gatos }} ({{porcentaje_gatos|floatformat:"1"}}%)
+      			</p>
+      			<div class="progress">
+      				<div class="determinate" {{"style="}} {{'"width:'}}{{porcentaje_gatos|floatformat:"0"}}{{'%"'}}></div>
+  				</div>
+      		</div>
+      	</div>      	
+
+      </div>
+
+
+
+	<div class="row grey lighten-4 z-depth-2">
+		<div class="col s12 right-align blue-grey white-text">
+			<h6>
+				<strong>
+				Distribución casos por barrio
+				</strong>
+			</h6>
+		</div>
+
+
+    	<div class="col s12 m6">
+
+
+ 
+
+
+
+		<script src="../../../static/js/Chart.js"></script>
+		<div id="canvas-holder" class="canvas-holder">
+		<canvas id="chart-areaA" width="250" height="250"></canvas>
+		
+		
+		</div>
+
+		<script>
+
+		var pieData = [
+			{% for barrio_nombre,barrio_cantidad in estadistica.items %}
+
+				{value: {{barrio_cantidad.0}} ,color:{{'"#'}}{{barrio_cantidad.4}}{{'"'}},highlight: "#0c62ab",label:{{'"'}}{{barrio_nombre}}{{'"'}}},
+			{% endfor %}
+		
+					];
+
+
+		var ctx = document.getElementById("chart-areaA").getContext("2d");
+		
+		window.myPie = new Chart(ctx).Pie(pieData);	
+
+		</script>
+<!-- 	///////////////////////////////////////////////////////////////////// -->	
+
+    	</div>
+
+
+
+
+
+
+
+
+		<div class="col s12 m6">
+
+
+
+
+		  <ul class="collection">
+
+	{% for barrio_nombre,barrio_cantidad in estadistica.items %}
+
+		    <li class="collection-item opciones_home grey lighten-4">
+			<h6 class="valign-wrapper">
+				<i class= {{'"'}}material-icons {{barrio_cantidad.5}}-text text-{{barrio_cantidad.6}}{{'"'}}>bookmark</i>
+				
+				B°: {{barrio_nombre}} {{barrio_cantidad.0}} ({{barrio_cantidad.1|floatformat:"1"}}%)
+			</h6>
+
+		    </li>
+
+	{% endfor %}
+		  </ul>
+
+
+
+		</div>  
+
+
+	</div>
+
+	<div class="row grey lighten-4 z-depth-2">
+		<div class="col s12 right-align blue-grey white-text">
+			<h6>
+				<strong>
+				Distribución según especie y sexo
+				</strong>
+			</h6>
+		</div>
+	
+
+	<div class="col s12 m6">
+
+
+ 		
+		<div id="canvas-holder2" class="canvas-holder">
+			<canvas id="chart-areaB" width="250" height="250"></canvas>
+		</div>
+
+		<script>
+			var pieDataB = [
+				{% for especimen,cantidad in estadistica_sexo.items %}
+
+					{value: {{cantidad.0}} ,color:{{'"#'}}{{cantidad.1}}{{'"'}},highlight: "#0c62ab",label:{{'"'}}{{especimen}}{{'"'}}},
+				{% endfor %}
+			
+						];
+
+
+			var ctxB = document.getElementById("chart-areaB").getContext("2d");
+		
+			window.myPie = new Chart(ctxB).Pie(pieDataB);
+		</script>
+<!-- 	///////////////////////////////////////////////////////////////////// -->	
+
+    </div>
+
+
+
+
+
+
+
+		<div class="col s12 m6">
+		  <ul class="collection">
+
+	{% for especimen,cantidad in estadistica_sexo.items %}
+
+		    <li class="collection-item grey lighten-4 opciones_home">
+			<h6 class="valign-wrapper">
+				<i class= {{'"'}}material-icons {{cantidad.2}}-text text-{{cantidad.3}}{{'"'}}>bookmark</i>
+				
+				B°: {{especimen}} {{cantidad.0}} ({{cantidad.4|floatformat:"1"}}%)
+			</h6>
+
+		    </li>
+
+	{% endfor %}
+		  </ul>
+		</div>  
+
+    </div>
+
+
+
+  
+
+<div class="row grey lighten-4 z-depth-2">
+	<div class="col s12 right-align blue-grey white-text">
+		<h6>
+			<strong>
+			Distribución de especies según el barrio
+			</strong>
+		</h6>
+	</div>
+
+
+	{% for barrio_nombre,barrio_cantidad in estadistica.items %}
+
+		<div class="col s12 m6">
+			<div class="card-panel grey lighten-3">
+				<h6>B°: {{barrio_nombre}} ({{barrio_cantidad.0}}) - {{barrio_cantidad.1|floatformat:"2"}}%</h6>
+				  	<div class="progress">
+		      			<div class="determinate" {{"style="}} {{'"width:'}}{{barrio_cantidad.1|floatformat:"0"}}{{'%"'}}></div>
+		  			</div>
+				<!-- <h6>Cantidad Atendidos: {{barrio_cantidad.0}}</h6>
+				<h6>Porcentaje Atendidos: {{barrio_cantidad.1|floatformat:"2"}}%</h6> -->
+					<h6>Perros: {{barrio_cantidad.2}} | Gatos: {{barrio_cantidad.3}}</h6>
+					
+			</div>
+		</div>
+		
+	{% endfor %}
+</div>
+
+
+
+
+		
+
+{% endblock %}

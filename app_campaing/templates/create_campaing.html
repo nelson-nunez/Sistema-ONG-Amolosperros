@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+  
+{% block encabezado %} Crear Campaña {% endblock %}
+
+{% block content %} 
+ 
+    <!-- inicio row  -->
+    <div class="row">
+      <!-- inicio columna para datos de campaña -->
+      <div class="col s12">
+       <div class="card-panel grey darken-4 center-align">
+          <span class="white-text"><strong>AGREGUE LOS DATOS PARA CREAR UNA <!-- ES PARA QUE VAYA UN RENGLON ABAJO, strong= para que sea en negrita -->
+            NUEVA CAMPAÑA</strong>
+          </span>
+        </div>       
+      </div>
+      <!-- fin datos campaña -->      
+    </div>
+          <!-- fin row  -->
+
+                      <!-- INICIO FORMULARIO  -->
+    <div class="row">
+    <form class="col s12" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+  
+      <div class="row"> <!-- row para los botones de abajo -->
+
+        <div class="col s12  center-align">
+
+          <button type="submit" class="waves-effect waves-light accent-2 btn-large"><i class="material-icons left">assignment</i></i>      Crear Campaña
+          </button>
+        </div>
+
+      </div>              
+    </form>
+  </div>
+             <!-- FIN FORMULARIO  -->
+ 
+
+{% endblock %}
+
+
+{% block extra_js %}
+  <script type="text/javascript">
+
+  $('.datepicker').pickadate({
+      selectMonths: true, // Creates a dropdown to control month
+      selectYears: 15, // Creates a dropdown of 15 years to control year,
+      today: 'Today',
+      clear: 'Clear',
+      close: 'Ok',
+      format: 'dd/mm/yyyy',
+      
+
+    });
+  </script>
+    
+  <!-- Para que funcione el select  -->
+  <script>
+  $(document).ready(function() {
+      $('select').material_select();
+    });
+  </script>
+
+{% endblock %}
+
+
